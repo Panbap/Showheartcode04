@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://github.com/Panbap/js/blob/main/icon/heartshow.jpg?raw=true" type="image/jpg">
+  <title>Code Heart 14</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
+  </style>
+</head>
+
+<body>
+  <div class="gooey center">
+
+    <div class="container center">
+      <div class="heart"></div>
+      <div class="heart"></div>
+    </div>
+
+    <canvas id="canvas" canvas="" width="569" height="584">
+    </canvas>
+  </div>
+
+  <svg>
+    <defs>
+      <filter id="filter">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -10" result="filter">
+        </feColorMatrix>
+        <feBlend></feBlend>
+      </filter>
+    </defs>
+  </svg>
+  <div class="container">
+
+    <button class="show-code-btn" onclick="toggleCode()">Show Code</button>
+    <div id="code-box" class="code-box">
+      <button class="close-btn" onclick="toggleCode()">Close</button>
+      <button class="copy-btn" onclick="copyCode()">Copy</button>
+
+      <pre>
+                <code id="code-to-copy">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Code Heart 14&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #1a1a1a;
+    }
+
+    .center {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    canvas {
+      position: absolute;
+    }
+
+    .gooey {
+      width: 100%;
+      height: 100%;
+      filter: url('#filter');
+    }
+
+    .container {
+      top: 50px;
+      width: 350px;
+      height: 400px;
+    }
+
+    .heart {
+      position: absolute;
+      left: 155px;
+      width: 150px;
+      height: 300px;
+      background: linear-gradient(#FCCB54 0, #F9904D 30%, #F65246 100%);
+      border-radius: 50% 50% 0 0;
+      transform: rotateZ(-45deg);
+      transform-origin: 50% 100%;
+    }
+
+    .heart:nth-child(2) {
+      left: 50px;
+      transform: rotateZ(45deg);
+    }
+  &lt;/style&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div class="gooey center"&gt;
+
+    &lt;div class="container center"&gt;
+      &lt;div class="heart"&gt;&lt;/div&gt;
+      &lt;div class="heart"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;canvas id="canvas" canvas="" width="569" height="584"&gt;
+    &lt;/canvas&gt;
+  &lt;/div&gt;
+
+  &lt;svg&gt;
+    &lt;defs&gt;
+      &lt;filter id="filter"&gt;
+        &lt;feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"&gt;&lt;/feGaussianBlur&gt;
+        &lt;feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 17 -10" result="filter"&gt;
+        &lt;/feColorMatrix&gt;
+        &lt;feBlend&gt;&lt;/feBlend&gt;
+      &lt;/filter&gt;
+    &lt;/defs&gt;
+  &lt;/svg&gt;
+
+  &lt;script id="rendered-js"&gt;
+    canvas = document.getElementById("canvas");
+    var context = canvas.getContext('2d');
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    baseColor = '#F65246';
+    midColor = '#F9904D';
+    fadeColor = '#FCCB54';
+    generatorStock = [];
+
+    generatorStock.push(new particleGenerator(2, 4, 200, 300));
+
+    function randomInt(min, max) {
+      return Math.floor(min + Math.random() * (max - min + 1));
+    }
+
+    function particle(vx, vy, size) {
+      this.radius = randomInt(size, size);
+      this.x = W / 2;
+      this.y = H / 2;
+      this.alpha = 1;
+      this.vx = randomInt(-vx, vx);
+      if (Math.random() &lt; 0.1) {
+        this.vy = randomInt(-vy, -vy - 3);
+      } else {
+        this.vy = randomInt(0, -vy);
+      }
+      this.lifetime = 100;
+    }
+    particle.prototype.update = function () {
+      this.lifetime -= 2;
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.lifetime &lt; 20) {
+        this.radius -= 2;
+      }
+
+      context.beginPath();
+      context.moveTo(this.x, this.y);
+      context.lineTo(this.x, this.y + this.radius);
+      var grd = context.createLinearGradient(this.x, this.y, this.x, this.y + this.radius);
+      grd.addColorStop(0, fadeColor);
+      grd.addColorStop(0.3, midColor);
+      grd.addColorStop(1, baseColor);
+      context.strokeStyle = grd;
+      context.lineWidth = 4;
+      context.stroke();
+      context.closePath();
+
+    };
+
+    function particleGenerator(vx, vy, size, maxParticles) {
+      this.size = size;
+      this.vx = vx;
+      this.vy = vy;
+      this.maxParticles = maxParticles;
+      this.particles = [];
+    }
+    var freq = 0.8;
+    particleGenerator.prototype.animate = function () {
+      if (this.particles.length &lt; this.maxParticles && Math.random() &lt; freq) {
+        this.particles.push(new particle(this.vx, this.vy, this.size));
+        if (this.particles.length == this.maxParticles / 2) {
+          freq = 0.1;
+        }
+      }
+      for (var i = 0; i &lt; this.particles.length; i++) {
+        p = this.particles[i];
+        p.update();
+        if (p.radius &lt; 10) {
+          this.particles[i] = new particle(this.vx, this.vy, this.size);
+        }
+      }
+    };
+
+    function update() {
+      context.clearRect(0, 0, W, H);
+
+      for (var i = 0; i &lt; generatorStock.length; i++) {
+        generatorStock[i].animate();
+      }
+      window.requestAnimationFrame(update);
+    }
+
+    update();
+
+    window.addEventListener('resize', function (e) {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }, false);
+  &lt;/script&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+                </code>
+            </pre>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/Panbap/js/Heart/showheartcode14.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://github.com/Panbap/js/blob/main/icon/heartshow.jpg?raw=true" type="image/jpg">
+  <title>Code Heart 11</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
+  </style>
+</head>
+
+<body>
+  <canvas id="c" width="948" height="584"></canvas>
+  <div class="container">
+
+    <button class="show-code-btn" onclick="toggleCode()">Show Code</button>
+    <div id="code-box" class="code-box">
+      <button class="close-btn" onclick="toggleCode()">Close</button>
+      <button class="copy-btn" onclick="copyCode()">Copy</button>
+
+      <pre>
+                <code id="code-to-copy">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Code Heart 11&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #eee;
+      font-family: Courier, monospace;
+      font-size: 14px;
+      background-color: #000;
+    }
+
+    #c {
+      display: block;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;canvas id="c" width="948" height="584"&gt;&lt;/canvas&gt;
+
+  &lt;script&gt;
+    var b = document.body;
+    var c = document.getElementsByTagName('canvas')[0];
+    var a = c.getContext('2d');
+    document.body.clientWidth;
+    e = [];
+    h = [];
+    O = c.width = innerWidth;
+    Q = c.height = innerHeight;
+
+    v = 32;
+    M = Math;
+    R = M.random;
+    C = M.cos;
+    Y = 6.3;
+    for (i = 0; i &lt; Y; i += .2) {
+      h.push([
+        O / 2 + 180 * M.pow(M.sin(i), 3),
+        Q / 2 + 10 * -(15 * C(i) - 5 * C(2 * i) - 2 * C(3 * i) - C(4 * i))]);
+
+    }
+
+    i = 0;
+    while (i &lt; v) {
+
+      x = R() * O;
+      y = R() * Q;
+
+      H = i / v * 80 + 280;
+      S = R() * 40 + 60;
+      B = R() * 60 + 20;
+
+      f = [];
+
+      k = 0;
+      while (k &lt; v) {
+        f[k++] = {
+          x: x,
+          y: y,
+          X: 0,
+          Y: 0,
+          R: 1 - k / v + 1,
+          S: R() + 1,
+          q: ~~(R() * v),
+          D: i % 2 * 2 - 1,
+          F: R() * .2 + .7,
+          f: "hsla(" + ~~H + "," + ~~S + "%," + ~~B + "%,.1)"
+        };
+      }
+
+      e[i++] = f;
+    }
+
+    function render(_) {
+      a.fillStyle = _.f;
+      a.beginPath();
+      a.arc(_.x, _.y, _.R, 0, Y, 1);
+      a.closePath();
+      a.fill();
+    }
+
+    function loop() {
+
+      a.fillStyle = "rgba(0,0,0,.2)";
+      a.fillRect(0, 0, O, Q);
+
+      i = v;
+      while (i--) {
+
+        f = e[i];
+        u = f[0];
+        q = h[u.q];
+        D = u.x - q[0];
+        E = u.y - q[1];
+        G = M.sqrt(D * D + E * E);
+
+        if (G &lt; 10) {
+          if (R() &gt; .95) {
+            u.q = ~~(R() * v);
+          } else {
+            if (R() &gt; .99) u.D *= -1;
+            u.q += u.D;
+            u.q %= v;
+            if (u.q &lt; 0) u.q += v;
+          }
+        }
+
+        u.X += -D / G * u.S;
+        u.Y += -E / G * u.S;
+
+        u.x += u.X;
+        u.y += u.Y;
+
+        render(u);
+
+        u.X *= u.F;
+        u.Y *= u.F;
+
+        k = 0;
+        while (k &lt; v - 1) {
+
+          T = f[k];
+          N = f[++k];
+
+          N.x -= (N.x - T.x) * .7;
+          N.y -= (N.y - T.y) * .7;
+
+          render(N);
+
+        }
+
+      }
+    };
+
+    (function doit() {
+      requestAnimationFrame(doit);
+      loop();
+    })();
+  &lt;/script&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+                </code>
+            </pre>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/Panbap/js/Heart/showheartcode11.js"></script>
+</body>
+
+</html>
